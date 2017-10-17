@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyEasyTouch</string>
+    <string name="open_easytouch">打开悬浮窗</string>
+    <string name="hint">提示</string>
+    <string name="hint_content_window">允许在其他应用上出现？请授权</string>
+    <string name="toast">请在应用列表中找到MyEasyTouch并且为其授权</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="app_accessibility_description">打开无障碍服务</string>
+    <string name="hint_content_accessibility">需要打开无障碍服务？</string>
+</resources>
