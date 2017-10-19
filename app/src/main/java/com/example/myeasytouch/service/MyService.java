@@ -14,15 +14,18 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class MyService extends AccessibilityService {
     private final static String TAG = "MyService";
+
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(TAG, "onCreate");
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy");
         EventBus.getDefault().unregister(this);
     }
 
@@ -40,13 +43,13 @@ public class MyService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-
+        Log.d(TAG, "onInterrupt");
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         MyViewHolder.setIsServiceRunning(false);
-        Log.d(TAG, "isServiceRunning");
+        Log.d(TAG, intent.toString());
         return super.onUnbind(intent);
     }
 

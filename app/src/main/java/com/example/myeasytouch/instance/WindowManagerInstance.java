@@ -9,15 +9,16 @@ import android.view.WindowManager;
 
 public class WindowManagerInstance {
     private static WindowManager windowManager ;
-    public static Context mContext;
+    public static Context applicationContext;
 
-    public WindowManagerInstance(Context context){
-        mContext = context;
-    }
     public static WindowManager newInstance(){
         if (windowManager == null){
-            windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            windowManager = (WindowManager) applicationContext.getSystemService(Context.WINDOW_SERVICE);
         }
         return windowManager;
+    }
+
+    public static void setApplicationContext(Context context){
+        applicationContext = context;
     }
 }

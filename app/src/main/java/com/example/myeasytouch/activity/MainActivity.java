@@ -19,8 +19,8 @@ import com.example.myeasytouch.view.EasyTouchView;
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private final static String TAG = "MainActivity";
     private final static int REQUESTCODE = 101;
-    private static boolean isFirstOpen = true;
     private Switch mSwitch;
+    private static MyViewHolder myViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +29,24 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         setContentView(R.layout.activity_main);
         mSwitch = (Switch) findViewById(R.id.open_easytouch);
         mSwitch.setOnCheckedChangeListener(this);
+        if (myViewHolder == null){
+            myViewHolder = new MyViewHolder(this);
+        }
+        Log.d(TAG, this.toString());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        MyViewHolder.hideEasyTouchView();
-        MyViewHolder myViewHolder = new MyViewHolder(this);
-        MyViewHolder.showEasyTouchView();
+        if (checkFloatWindowPermission()) {//已授权
+            MyViewHolder.showEasyTouchView();
+        }
         if (!EasyTouchView.isAlive){
+            Log.d(TAG, "setCheck(false) onResume");
             mSwitch.setChecked(false);
         }
         else{
+            Log.d(TAG, "setCheck(true) onResume");
             mSwitch.setChecked(true);
         }
     }
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 isAllowed = true;
             }
         }
-        else{
+        else{//23以下版本只要安装就已被授权，并且无法撤销
             isAllowed = true;
         }
         return isAllowed;
@@ -78,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 mSwitch.setChecked(false);
             }
         });
-
         alertDialog.show();
     }
 

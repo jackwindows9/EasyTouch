@@ -20,8 +20,6 @@ import com.example.myeasytouch.holder.MyViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
 
-import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-
 
 /**
  * Created by 司维 on 2017/10/11.
@@ -64,11 +62,11 @@ public class MutiTaskView extends RelativeLayout {
                 WindowManager.LayoutParams.MATCH_PARENT,
                 0,
                 0,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSPARENT
         );
         mLayoutParams.gravity = Gravity.CENTER;
-        mLayoutParams.flags = FLAG_NOT_FOCUSABLE;
-        mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
     }
 
     @Override
