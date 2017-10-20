@@ -3,7 +3,6 @@
     package="com.example.myeasytouch">
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
-        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

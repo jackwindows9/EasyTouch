@@ -70,18 +70,8 @@ public class EasyTouchView extends LinearLayout {
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         mLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         mLayoutParams.gravity = Gravity.TOP | Gravity.LEFT;
-        if ((xInScreen - xInView) != 0) {//重新出现恢复之前的位置
-            mLayoutParams.x = (int) (xInScreen - xInView);
-        }
-        else{//初次初始化为屏幕中左处
-            mLayoutParams.x = screenWidth;
-        }
-        if (((yInScreen - yInView) != 0)){
-            mLayoutParams.y = (int) (yInScreen - yInView);
-        }
-        else{
-            mLayoutParams.y = screenHeight / 2;
-        }
+        mLayoutParams.x = screenWidth;
+        mLayoutParams.y = screenHeight / 2;
     }
 
     @Override

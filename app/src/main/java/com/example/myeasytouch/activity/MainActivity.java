@@ -19,8 +19,8 @@ import com.example.myeasytouch.view.EasyTouchView;
 public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
     private final static String TAG = "MainActivity";
     private final static int REQUESTCODE = 101;
-    private Switch mSwitch;
     private static MyViewHolder myViewHolder;
+    private Switch mSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         if (myViewHolder == null){
             myViewHolder = new MyViewHolder(this);
         }
-        Log.d(TAG, this.toString());
     }
 
     @Override
@@ -52,16 +51,15 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     }
 
     private boolean checkFloatWindowPermission(){
-        boolean isAllowed = false;
         if (Build.VERSION.SDK_INT >= 23) {
-            if (Settings.canDrawOverlays(this)) {//未拥有权限
-                isAllowed = true;
+            if (Settings.canDrawOverlays(this)) {//已拥有权限
+                return true;
             }
         }
         else{//23以下版本只要安装就已被授权，并且无法撤销
-            isAllowed = true;
+            return true;
         }
-        return isAllowed;
+        return false;
     }
 
     private void showPromptingDialog(){

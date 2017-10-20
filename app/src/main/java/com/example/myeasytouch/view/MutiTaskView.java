@@ -109,26 +109,20 @@ public class MutiTaskView extends RelativeLayout {
             switch(view.getId()){
                 case R.id.image_home:
                     EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_HOME));
-                    MyViewHolder.hideMutiTaskView();
-                    MyViewHolder.showEasyTouchView();
                     break;
                 case R.id.image_back:
                     EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_BACK));
-                    MyViewHolder.hideMutiTaskView();
-                    MyViewHolder.showEasyTouchView();
                     break;
                 case R.id.image_recents:
                     EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_RECENTS));
-                    MyViewHolder.hideMutiTaskView();
-                    MyViewHolder.showEasyTouchView();
                     break;
                 case R.id.image_flashlight:
-                    MyViewHolder.hideMutiTaskView();
-                    MyViewHolder.showEasyTouchView();
                     break;
                 default:
                     break;
             }
+            MyViewHolder.hideMutiTaskView();
+            MyViewHolder.showEasyTouchView();
         }
     };
 }

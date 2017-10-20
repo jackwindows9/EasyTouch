@@ -15,14 +15,14 @@ import com.example.myeasytouch.view.MutiTaskView;
  */
 
 public class MyViewHolder {
-    private static Context applicationContext;
     private final static String TAG = "MyViewHolder";
+    private static Context applicationContext;
     private static EasyTouchView mEasyTouchView;
     private static MutiTaskView mutiTaskView;
     private static WindowManager mWindowManager;
     public static boolean isServiceRunning = false;
 
-    public MyViewHolder(Context context){//只允许调用一次，因为只能有一个applicationContext
+    public MyViewHolder(Context context){//只允许初始化一次，因为只能有一个applicationContext
         applicationContext = context.getApplicationContext();
         this.mEasyTouchView = new EasyTouchView(applicationContext, null);
         this.mutiTaskView = new MutiTaskView(applicationContext, null);
@@ -70,25 +70,25 @@ public class MyViewHolder {
         isServiceRunning = isRunning;
     }
 
-//    private static void showPromptingDialog(){
-//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-//        alertDialog.setTitle(mContext.getResources().getString(R.string.hint));
-//        alertDialog.setMessage(mContext.getResources().getString(R.string.hint_content_accessibility));
-//        alertDialog.setCancelable(false);
-//        alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                mContext.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-//                Toast.makeText(mContext, R.string.toast, Toast.LENGTH_LONG).show();
-//                isDialogShow = false;
-//            }
-//        });
-//        alertDialog.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                isDialogShow = false;
-//            }
-//        });
-//        alertDialog.show();
-//    }
+    //    private static void showPromptingDialog(){
+    //        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+    //        alertDialog.setTitle(mContext.getResources().getString(R.string.hint));
+    //        alertDialog.setMessage(mContext.getResources().getString(R.string.hint_content_accessibility));
+    //        alertDialog.setCancelable(false);
+    //        alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+    //            @Override
+    //            public void onClick(DialogInterface dialogInterface, int i) {
+    //                mContext.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+    //                Toast.makeText(mContext, R.string.toast, Toast.LENGTH_LONG).show();
+    //                isDialogShow = false;
+    //            }
+    //        });
+    //        alertDialog.setNegativeButton(mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+    //            @Override
+    //            public void onClick(DialogInterface dialogInterface, int i) {
+    //                isDialogShow = false;
+    //            }
+    //        });
+    //        alertDialog.show();
+    //    }
 }
