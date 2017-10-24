@@ -25,11 +25,11 @@
                 android:background="@drawable/ic_home" />
 
             <ImageView
-                android:id="@+id/image_flashlight"
+                android:id="@+id/image_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/mutitask_layout_margin"
-                android:background="@drawable/ic_flashlight_on" />
+                android:background="@drawable/ic_star" />
 
         </LinearLayout>
 

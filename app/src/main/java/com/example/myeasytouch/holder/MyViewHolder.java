@@ -1,8 +1,6 @@
 package com.example.myeasytouch.holder;
 
 import android.content.Context;
-import android.content.Intent;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -57,13 +55,8 @@ public class MyViewHolder {
     }
 
     public static void openMutiTaskWindow(){
-        if (isServiceRunning){//服务已开启
-            hideEasyTouchView();
-            showMutiTaskView();
-        }
-        else{
-            applicationContext.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
-        }
+        hideEasyTouchView();
+        showMutiTaskView();
     }
 
     public static void setIsServiceRunning(boolean isRunning){

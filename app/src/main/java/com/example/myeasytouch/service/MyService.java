@@ -59,9 +59,6 @@ public class MyService extends AccessibilityService {
         if (MutiTaskView.GLOBAL_ACTION_BACK.equals(msg)) {
             performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
         }
-        if (MutiTaskView.GLOBAL_ACTION_HOME.equals(msg)){
-            performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
-        }
         if (MutiTaskView.GLOBAL_ACTION_RECENTS.equals(msg)){
             performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
         }

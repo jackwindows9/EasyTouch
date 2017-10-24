@@ -1,7 +1,9 @@
 package com.example.myeasytouch.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,8 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.myeasytouch.R;
 import com.example.myeasytouch.event.MessageEvent;
@@ -28,30 +30,29 @@ import org.greenrobot.eventbus.EventBus;
 public class MutiTaskView extends RelativeLayout {
     private final static String TAG = "MutiTaskView";
     public final static String GLOBAL_ACTION_BACK = "BACK";
-    public final static String GLOBAL_ACTION_HOME = "HOME";
     public final static String GLOBAL_ACTION_RECENTS = "RECENTS";
+    private Context mContext;
     private WindowManager.LayoutParams mLayoutParams;
-    private LinearLayout linearLayout_mutitaskview;
     private ImageView imageView_home;
-    private ImageView imageView_flashlight;
+    private ImageView imageView_favor;
     private ImageView imageView_back;
     private ImageView imageView_recents;
 
     public MutiTaskView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         LayoutInflater.from(context).inflate(R.layout.mutitask_view_layout, this);
-        linearLayout_mutitaskview = findViewById(R.id.linearlayout_view);
         initImageView();
         initLayoutParams();
     }
 
     public void initImageView(){
         imageView_home = findViewById(R.id.image_home);
-        imageView_flashlight = findViewById(R.id.image_flashlight);
+        imageView_favor = findViewById(R.id.image_star);
         imageView_back = findViewById(R.id.image_back);
         imageView_recents = findViewById(R.id.image_recents);
         imageView_home.setOnClickListener(onClickListener);
-        imageView_flashlight.setOnClickListener(onClickListener);
+        imageView_favor.setOnClickListener(onClickListener);
         imageView_back.setOnClickListener(onClickListener);
         imageView_recents.setOnClickListener(onClickListener);
     }
@@ -71,31 +72,10 @@ public class MutiTaskView extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN){
-            if (!isInMyView(event)){//未点击view中区域
-                MyViewHolder.hideMutiTaskView();
-                MyViewHolder.showEasyTouchView();
-                Log.d(TAG, "onTouchEvent");
-            }
-        }
+        MyViewHolder.hideMutiTaskView();
+        MyViewHolder.showEasyTouchView();
+        Log.d(TAG, "onTouchEvent");
         return super.onTouchEvent(event);
-    }
-
-    public boolean isInMyView(MotionEvent event){
-        int[] location = new int[2];
-        linearLayout_mutitaskview.getLocationOnScreen(location);
-        int x = location[0];
-        int y = location[1];
-        if (event.getX() > x &&
-                event.getX() < (x + linearLayout_mutitaskview.getWidth()) &&
-                event.getY() > y &&
-                event.getY() < (y + linearLayout_mutitaskview.getHeight())
-                ) {
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     public WindowManager.LayoutParams getmLayoutParams() {
@@ -108,15 +88,18 @@ public class MutiTaskView extends RelativeLayout {
             Log.d(TAG, "onClickListener");
             switch(view.getId()){
                 case R.id.image_home:
-                    EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_HOME));
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    mContext.startActivity(intent);
                     break;
                 case R.id.image_back:
-                    EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_BACK));
+                    handleAccessibilityClick(GLOBAL_ACTION_BACK);
                     break;
                 case R.id.image_recents:
-                    EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_RECENTS));
+                    handleAccessibilityClick(GLOBAL_ACTION_RECENTS);
                     break;
-                case R.id.image_flashlight:
+                case R.id.image_star:
                     break;
                 default:
                     break;
@@ -125,4 +108,21 @@ public class MutiTaskView extends RelativeLayout {
             MyViewHolder.showEasyTouchView();
         }
     };
+
+    private void handleAccessibilityClick(String message){
+        if (MyViewHolder.isServiceRunning) {
+            if (message == GLOBAL_ACTION_BACK) {
+                EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_BACK));
+            }
+            if (message == GLOBAL_ACTION_RECENTS){
+                EventBus.getDefault().post(new MessageEvent(GLOBAL_ACTION_RECENTS));
+            }
+        }
+        else{
+            Toast.makeText(mContext, R.string.toast, Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(i);
+        }
+    }
 }
