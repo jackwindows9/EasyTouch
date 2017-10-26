@@ -7,7 +7,7 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.example.myeasytouch.event.MessageEvent;
 import com.example.myeasytouch.holder.MyViewHolder;
-import com.example.myeasytouch.view.MutiTaskView;
+import com.example.myeasytouch.view.MutiTaskMainView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,10 +56,10 @@ public class MyService extends AccessibilityService {
     @Subscribe
     public void onEventMainThread(MessageEvent event){
         String msg = event.getMsg();
-        if (MutiTaskView.GLOBAL_ACTION_BACK.equals(msg)) {
+        if (MutiTaskMainView.GLOBAL_ACTION_BACK.equals(msg)) {
             performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
         }
-        if (MutiTaskView.GLOBAL_ACTION_RECENTS.equals(msg)){
+        if (MutiTaskMainView.GLOBAL_ACTION_RECENTS.equals(msg)){
             performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
         }
     }

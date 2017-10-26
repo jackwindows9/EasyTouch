@@ -2,4 +2,5 @@
 <resources>
     <dimen name="main_layout_margin">16dp</dimen>
     <dimen name="mutitask_layout_margin">24dp</dimen>
+    <dimen name="mutitask_favor_margin">16dp</dimen>
 </resources>

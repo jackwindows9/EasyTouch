@@ -6,7 +6,7 @@ import android.view.WindowManager;
 
 import com.example.myeasytouch.instance.WindowManagerInstance;
 import com.example.myeasytouch.view.EasyTouchView;
-import com.example.myeasytouch.view.MutiTaskView;
+import com.example.myeasytouch.view.MutiTaskMainView;
 
 /**
  * Created by 司维 on 2017/10/11.
@@ -16,14 +16,14 @@ public class MyViewHolder {
     private final static String TAG = "MyViewHolder";
     private static Context applicationContext;
     private static EasyTouchView mEasyTouchView;
-    private static MutiTaskView mutiTaskView;
+    private static MutiTaskMainView mutiTaskMainView;
     private static WindowManager mWindowManager;
     public static boolean isServiceRunning = false;
 
     public MyViewHolder(Context context){//只允许初始化一次，因为只能有一个applicationContext
         applicationContext = context.getApplicationContext();
         this.mEasyTouchView = new EasyTouchView(applicationContext, null);
-        this.mutiTaskView = new MutiTaskView(applicationContext, null);
+        this.mutiTaskMainView = new MutiTaskMainView(applicationContext, null);
         WindowManagerInstance.setApplicationContext(applicationContext);
         mWindowManager = WindowManagerInstance.newInstance();
     }
@@ -33,7 +33,7 @@ public class MyViewHolder {
             WindowManager.LayoutParams layoutParams = mEasyTouchView.getmLayoutParams();
             EasyTouchView.isAlive = true;
             mWindowManager.addView(mEasyTouchView, layoutParams);
-            Log.d(TAG, "SHOW");
+            Log.d(TAG, "show");
         }
     }
 
@@ -45,18 +45,18 @@ public class MyViewHolder {
         }
     }
 
-    public static void showMutiTaskView(){
-        WindowManager.LayoutParams layoutParams = mutiTaskView.getmLayoutParams();
-        mWindowManager.addView(mutiTaskView, layoutParams);
+    public static void showMutiTaskMainView(){
+        WindowManager.LayoutParams layoutParams = mutiTaskMainView.getmLayoutParams();
+        mWindowManager.addView(mutiTaskMainView, layoutParams);
     }
 
-    public static void hideMutiTaskView(){
-        mWindowManager.removeView(mutiTaskView);
+    public static void hideMutiTaskMainView(){
+        mWindowManager.removeView(mutiTaskMainView);
     }
 
     public static void openMutiTaskWindow(){
         hideEasyTouchView();
-        showMutiTaskView();
+        showMutiTaskMainView();
     }
 
     public static void setIsServiceRunning(boolean isRunning){
