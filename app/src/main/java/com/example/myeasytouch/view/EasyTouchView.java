@@ -1,5 +1,7 @@
 package com.example.myeasytouch.view;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -25,6 +27,8 @@ public class EasyTouchView extends LinearLayout {
     private WindowManager.LayoutParams mLayoutParams;
     private static int screenWidth;
     private static int screenHeight;
+    private static int viewWidth;
+    private static int viewHeight;
     public static boolean isAlive = false;
     /** 
      *  记录当前手指位置在屏幕上的横坐标值 
@@ -59,6 +63,13 @@ public class EasyTouchView extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.easytouch_view_layout, this);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        viewWidth = this.getWidth();
+        viewHeight = this.getHeight();
+    }
+
     public void initLayoutParams(){
         mLayoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -88,11 +99,16 @@ public class EasyTouchView extends LinearLayout {
             case MotionEvent.ACTION_MOVE:
                 xInScreen = event.getRawX();
                 yInScreen = event.getRawY() - getStatusBarHeight();
+                mLayoutParams.x = (int) (xInScreen - xInView);
+                mLayoutParams.y = (int) (yInScreen - yInView);
                 updateViewPosition();
                 break;
             case MotionEvent.ACTION_UP:
-                if (xInScreen == xDownInScreen && yInScreen == yDownInScreen){
+                if (xInScreen == xDownInScreen && yInScreen == yDownInScreen){//表示并未发生move事件，可看作点击事件
                     MyViewHolder.openMutiTaskWindow();
+                }
+                else{//发生了move事件，需要进行回归两边的动画
+                    startViewPositionAnimator();
                 }
                 break;
         }
@@ -100,10 +116,27 @@ public class EasyTouchView extends LinearLayout {
     }
 
     public void updateViewPosition() {
-        mLayoutParams.x = (int) (xInScreen - xInView);
-        mLayoutParams.y = (int) (yInScreen - yInView);
         WindowManager windowManager = WindowManagerInstance.newInstance();
         windowManager.updateViewLayout(this, mLayoutParams);
+    }
+
+    public void startViewPositionAnimator(){
+        ValueAnimator valueAnimator = ObjectAnimator.ofFloat(0, 1f);
+        //Duration 默认300ms
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float)animation.getAnimatedValue();
+                if (mLayoutParams.x + viewWidth / 2 <= screenWidth / 2){//向左
+                    mLayoutParams.x = (int) ((float)mLayoutParams.x * (1 - value));
+                }
+                else{
+                    mLayoutParams.x += (int) ((float)(screenWidth - mLayoutParams.x) * value);
+                }
+                updateViewPosition();
+            }
+        });
+        valueAnimator.start();
     }
 
     public float getStatusBarHeight() {//获取状态栏高度

@@ -147,6 +147,9 @@ public class MutiTaskMainView extends RelativeLayout {
                 case R.id.favor_back:
                     replaceToMainView();
                     break;
+                case R.id.add_0:
+                    
+                    break;
                 default:
                     break;
             }
